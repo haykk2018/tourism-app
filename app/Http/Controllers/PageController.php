@@ -13,7 +13,10 @@ class PageController extends Controller
      */
     public function index()
     {
-        return "hello";
+        //return view('page.show');
+        $all_pages= Page::all();
+        //dd($all_pages);
+        return view('page.show', ['pages' => $all_pages]);
     }
 
     /**
