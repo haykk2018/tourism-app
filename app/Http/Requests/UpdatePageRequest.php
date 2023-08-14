@@ -11,7 +11,7 @@ class UpdatePageRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return auth()->check();
     }
 
     /**
@@ -22,7 +22,10 @@ class UpdatePageRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'title'=> ['string', 'max:255'],
+            'short_description'=> ['string', 'max:255'],
+            'description'=> ['string', 'max:255'],
+            'img_src'=> ['string', 'max:255'],
         ];
     }
 }

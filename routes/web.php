@@ -19,10 +19,14 @@ use Illuminate\Support\Facades\Route;
 //    return view('welcome');
 //});
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+//Route::get('/dashboard', function () {
+//    return view('dashboard');
+//})->middleware(['auth', 'verified'])->name('dashboard');
 
+//Route::middleware('auth')->group(function () {
+//    Route::get('/dashboard', [DashboardPageController::class, 'index']);
+//    Route::get('/dashboard/page-edit/{id}', [DashboardPageController::class, 'edit']);
+//});
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
@@ -31,12 +35,13 @@ Route::middleware('auth')->group(function () {
 
 Route::controller(PageController::class)->group(function () {
     Route::get('/', 'index');
-    Route::get('/edit/{id}', 'edit');
+    Route::get('/dashboard', 'dashboard')->middleware('auth');
+    Route::get('/edit/{id}', 'edit')->middleware('auth');
     Route::get('/view/{id}', 'show');
-    Route::get('/create', 'create');
+    Route::get('/create', 'create')->middleware('auth');
     Route::post('/', 'store');
-    Route::put('/{post}','update');
-    Route::delete('delete/{id}','destroy');
+    Route::put('/','update');
+    Route::delete('/delete','destroy')->middleware('auth');
 });
 
 require __DIR__.'/auth.php';
