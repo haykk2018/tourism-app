@@ -10,8 +10,7 @@
     <div>{{$page->title}}</div>
     <div>{{$page->short_description}}</div>
     <div>{{$page->description}}</div>
-    <div><img src="{{$page->img_src ?? URL::asset('images/blank.jpg')}}" alt="" width="" height=""></div>
-
+    <div><img src="{{$page->img_src ? asset($page->img_src) : asset('images/blank.jpg')}}" alt="" width="" height=""></div>
 </div>
 <hr>
 </body>

@@ -19,7 +19,7 @@
                     </ul>
                 </div>
             @endif
-            <form action="/" method="post">
+            <form action="/" method="post" enctype="multipart/form-data">
                 @csrf
                 @method('PUT')
                 <input name="id" value="{{$page->id}}" hidden/>
@@ -44,6 +44,11 @@
                               placeholder="Write your description...">
                         {{$page->description}}
                     </textarea>
+                    <br>
+
+                    <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white" for="file">Upload file</label>
+                    <input name="file" class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400" id="file" type="file">
+
                 </div>
                 <x-primary-button>{{ __('Save') }}</x-primary-button>
             </form>

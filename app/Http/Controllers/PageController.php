@@ -68,6 +68,10 @@ class PageController extends Controller
     {
         $page = Page::find($request->id)->fill($request->validated());
         $page->fill($request->validated());
+        if ($request->hasFile('file')) {
+            $img_src = $request->file('file')->store('page-photos');
+            $page->img_src = $img_src;
+        }
         $page->save();
         return redirect('/view/'.$request->id);
     }
