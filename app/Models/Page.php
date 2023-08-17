@@ -32,6 +32,12 @@ class Page extends Model
 {
     use HasFactory;
 
+    public function categories()
+    {
+        return $this->belongsToMany(Category::class);
+    }
+
+
     protected $fillable = [
         'title',
         'description',

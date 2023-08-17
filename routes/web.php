@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
@@ -32,7 +33,6 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
-
 Route::controller(PageController::class)->group(function () {
     Route::get('/', 'index');
     Route::get('/dashboard', 'dashboard')->middleware('auth');
@@ -42,6 +42,14 @@ Route::controller(PageController::class)->group(function () {
     Route::post('/', 'store');
     Route::put('/','update');
     Route::delete('/delete','destroy')->middleware('auth');
+});
+Route::controller(CategoryController::class)->group(function () {
+    Route::get('categories/', 'index');
+    Route::get('category/edit/{id}', 'edit')->middleware('auth');
+    Route::get('category/create', 'create')->middleware('auth');
+    Route::post('category/', 'store');
+    Route::put('category/','update');
+    Route::delete('category/delete','destroy')->middleware('auth');
 });
 
 require __DIR__.'/auth.php';
