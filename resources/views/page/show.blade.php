@@ -10,7 +10,14 @@
     <div>{{$page->title}}</div>
     <div>{{$page->short_description}}</div>
     <div>{{$page->description}}</div>
-    <div><img src="{{$page->img_src ? asset($page->img_src) : asset('images/blank.jpg')}}" alt="" width="" height=""></div>
+    <div><img src="{{$page->img_src ? asset($page->img_src) : asset('storage/blank.jpg')}}" alt="" width="" height=""></div>
+    <div>
+        @isset($page->categories)
+            @foreach($page->categories as $category)
+                <p>Category: {{$category->name}}</p>
+            @endforeach
+        @endisset
+    </div>
 </div>
 <hr>
 </body>

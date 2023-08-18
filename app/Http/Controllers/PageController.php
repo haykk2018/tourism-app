@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StorePageRequest;
 use App\Http\Requests\UpdatePageRequest;
+use App\Models\Category;
 use App\Models\Page;
 use Illuminate\Http\Request;
 
@@ -14,13 +15,13 @@ class PageController extends Controller
      */
     public function index()
     {
-        $all_pages= Page::all();
+        $all_pages = Page::all();
         return view('page.show_all', ['pages' => $all_pages]);
     }
 
     public function dashboard()
     {
-        $all_pages= Page::all();
+        $all_pages = Page::all();
         return view('dashboard', ['pages' => $all_pages]);
     }
 
@@ -29,7 +30,8 @@ class PageController extends Controller
      */
     public function create()
     {
-        return view('page.new');
+        $categories = Category::all();
+        return view('page.new',  ['categories' => $categories]);
     }
 
     /**
@@ -39,8 +41,17 @@ class PageController extends Controller
     {
         $page = new Page();
         $page->fill($request->validated());
+        if ($request->hasFile('file')) {
+            $img_src = $request->file('file')->store('page-photos');
+            $page->img_src = $img_src;
+        }
         $page->save();
-        return redirect('/view/'.$page->id);
+        if ($request->category) {
+            $page->refresh();
+            $page->categories()->attach($request->category);
+            $page->save();
+        }
+        return redirect('/view/' . $page->id);
     }
 
     /**
@@ -58,7 +69,8 @@ class PageController extends Controller
     public function edit(int $id)
     {
         $page = Page::findOrFail($id);
-        return view('page.edit', ['page' => $page]);
+        $categories = Category::all();
+        return view('page.edit', ['page' => $page, 'categories' => $categories]);
     }
 
     /**
@@ -66,14 +78,18 @@ class PageController extends Controller
      */
     public function update(UpdatePageRequest $request)
     {
-        $page = Page::find($request->id)->fill($request->validated());
+        $page = Page::find($request->id);
         $page->fill($request->validated());
         if ($request->hasFile('file')) {
             $img_src = $request->file('file')->store('page-photos');
             $page->img_src = $img_src;
         }
+        if ($request->category) {
+            $page->categories()->detach();
+            $page->categories()->attach($request->category);
+        }
         $page->save();
-        return redirect('/view/'.$request->id);
+        return redirect('/view/' . $request->id);
     }
 
     /**

@@ -13,7 +13,7 @@
   first-letter:text-7xl first-letter:font-bold first-letter:text-white
   first-letter:mr-3 first-letter:float-left
 ">{{$page->short_description}}</p></div>
-        <div><img src="{{$page->img_src ?? URL::asset('images/blank.jpg')}}" alt="" width="" height=""></div>
+        <div><img src="{{$page->img_src ?? URL::asset('storage/blank.jpg')}}" alt="" width="" height=""></div>
         <div>
             @isset($page->categories)
                 @foreach($page->categories as $category)

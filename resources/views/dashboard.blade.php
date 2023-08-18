@@ -16,7 +16,7 @@
 
                     <div>{{$page->title}}</div>
                     <div>{{$page->short_description}}</div>
-                    <div><img src="{{$page->img_src ?? URL::asset('images/blank.jpg')}}" alt="" width="" height="">
+                    <div><img src="{{$page->img_src ?? URL::asset('storage/blank.jpg')}}" alt="" width="" height="">
                     </div>
                     <div>
                         @isset($page->categories)
