@@ -10,7 +10,7 @@ use Illuminate\Database\Eloquent\Model;
  *
  * @property int $id
  * @property string $title
- * @property string $short_description
+ * @property string $meta_description
  * @property string $description
  * @property string|null $img_src
  * @property \Illuminate\Support\Carbon|null $created_at
@@ -43,7 +43,11 @@ class Page extends Model
     protected $fillable = [
         'title',
         'description',
-        'short_description',
-        'img_src'
+        'meta_description',
+        'keywords',
+        'menu_name',
+        'content',
+        'img_src',
+        'img_alt'
     ];
 }

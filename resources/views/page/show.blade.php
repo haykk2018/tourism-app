@@ -3,14 +3,15 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>PAGE</title>
+    <meta name="description" content="{{$page->meta_description}}">
+    <meta name="keywords" content="{{$page->keywords}}">
+    <title>{{$page->title}}</title>
 </head>
 <body>
 <div>
     <div>{{$page->title}}</div>
-    <div>{{$page->short_description}}</div>
     <div>{{$page->description}}</div>
-    <div><img src="{{$page->img_src ? asset($page->img_src) : asset('storage/blank.jpg')}}" alt="" width="" height=""></div>
+    <div><img src="{{$page->img_src ? asset($page->img_src) : asset('storage/blank.jpg')}}" alt="{{$page->img_alt}}" width="" height=""></div>
     <div>
         @isset($page->categories)
             @foreach($page->categories as $category)

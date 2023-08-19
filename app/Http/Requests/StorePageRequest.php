@@ -23,9 +23,13 @@ class StorePageRequest extends FormRequest
     {
         return [
             'title'=> ['string', 'max:255'],
-            'short_description'=> ['string', 'max:255'],
+            'meta_description'=> ['string', 'max:255'],
+            'keywords'=> ['string', 'max:255'],
             'description'=> ['string', 'max:255'],
+            'menu_name'=> ['string', 'max:255'],
+            'content'=> ['string'],
             'img_src'=> ['string', 'max:255'],
+            'img_alt'=> ['string', 'max:255'],
         ];
     }
 }

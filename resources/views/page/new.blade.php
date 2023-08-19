@@ -17,17 +17,29 @@
                 <form action="/" method="post" enctype="multipart/form-data">
                     @csrf
                     <div class="sm:p-8">
-                        <x-input-label for="title"/>
+                        <x-input-label for="title" :value="__('Title')"/>
                         <x-text-input id="title" name="title" type="text" class="mt-1 block w-full"
                                       required autofocus autocomplete="title"/>
                         <x-input-error class="mt-2" :messages="$errors->get('title')"/>
                     </div>
                     <div class="sm:p-8">
-                        <x-input-label for="short_description"/>
-                        <x-text-input id="short_description" name="short_description" type="text"
+                        <x-input-label for="keywords" :value="__('Keywords')"/>
+                        <x-text-input id="keywords" name="keywords" type="text" class="mt-1 block w-full"
+                                      required autofocus autocomplete="keywords"/>
+                        <x-input-error class="mt-2" :messages="$errors->get('keywords')"/>
+                    </div>
+                    <div class="sm:p-8">
+                        <x-input-label for="meta_description" :value="__('Meta Description')"/>
+                        <x-text-input id="meta_description" name="meta_description" type="text"
                                       class="mt-1 block w-full"
-                                      required autofocus autocomplete="short_description"/>
-                        <x-input-error class="mt-2" :messages="$errors->get('short_description')"/>
+                                      required autofocus autocomplete="meta_description"/>
+                        <x-input-error class="mt-2" :messages="$errors->get('meta_description')"/>
+                    </div>
+                    <div class="sm:p-8">
+                        <x-input-label for="menu_name" :value="__('Menu Name')"/>
+                        <x-text-input id="menu_name" name="menu_name" type="text" class="mt-1 block w-full"
+                                      required autofocus autocomplete="menu_name"/>
+                        <x-input-error class="mt-2" :messages="$errors->get('menu_name')"/>
                     </div>
                     <div class="sm:p-8">
                         <label for="description"
@@ -35,6 +47,13 @@
                         <textarea id="description" name="description" rows="4"
                                   class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-900 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                   placeholder="Write your description...">
+                    </textarea>
+                        <br>
+                        <label for="content"
+                               class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">{{__('Content')}}</label>
+                        <textarea id="content" name="content" rows="4"
+                                  class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-900 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                  placeholder="Write your content">
                     </textarea>
                         <br>
                         <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white" for="categories">Choose
@@ -48,11 +67,20 @@
                             @endforeach
                         </select>
                         <br>
+                        {{--        file inputs          --}}
                         <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white" for="file">Upload
                             file</label>
                         <input name="file"
                                class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-900 dark:border-gray-600 dark:placeholder-gray-400"
                                id="file" type="file">
+                        <div class="" id="img_alt_div">
+                            <br>
+                            <x-input-label for="img_alt" :value="__('Image Alternative Text')"/>
+                            <x-text-input id="img_alt" name="img_alt" type="text" class="mt-1 block w-full"
+                                          required autofocus autocomplete="name"/>
+                            <x-input-error class="mt-2" :messages="$errors->get('img_alt')"/>
+                        </div>
+                        {{--      End  File Inputs        --}}
                     </div>
                     <x-primary-button>{{ __('Save') }}</x-primary-button>
                 </form>
@@ -70,4 +98,15 @@
             </div>
         </div>
     </div>
+    <script>
+        let fileInput = document.getElementById("file");
+        let img_alt_div = document.getElementById("img_alt_div");
+        img_alt_div.style.display = "none";
+        fileInput.addEventListener("change", function () {
+            // check if the file is selected or not
+            if (fileInput.files.length !== 0) {
+                img_alt_div.style.display = "block";
+            }
+        });
+    </script>
 </x-app-layout>

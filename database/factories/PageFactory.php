@@ -17,9 +17,14 @@ class PageFactory extends Factory
     public function definition(): array
     {
         return [
-            'title'=> fake()->word,
-            'short_description'=>fake()->realText(rand(10,50)),
-            'description'=>fake()->realText(rand(10,150)),
-            'img_src'=>fake()->imageUrl        ];
+            'title' => fake()->unique()->word,
+            'keywords' => fake()->words(4, true),
+            'meta_description' => fake()->realText(rand(10, 50)),
+            'menu_name' => fake()->unique()->words(2, true),
+            'description' => fake()->realText(rand(10, 50)),
+            'content' => fake()->realText(rand(10, 350)),
+            'img_src' => fake()->imageUrl,
+            'img_alt' => fake()->sentence,
+        ];
     }
 }

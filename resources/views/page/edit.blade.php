@@ -3,11 +3,6 @@
         <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
             {{ __('Dashboard') }}
         </h2>
-        <nav class="flex justify-center space-x-4">
-            {{--            @foreach ($pages as $page)--}}
-            {{--            <a href="dashboard/page?id={{$page->id}}" class="font-bold px-3 py-2 text-slate-700 rounded-lg hover:bg-slate-100 hover:text-slate-900 text-gray-800 dark:text-gray-200">{{$page->title}}</a>--}}
-            {{--            @endforeach--}}
-        </nav>
         <div class="max-w-xl">
             <div class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight lg:px-8">
 
@@ -31,12 +26,20 @@
                         <x-input-error class="mt-2" :messages="$errors->get('title')"/>
                     </div>
                     <div class="sm:p-8">
-                        <x-input-label for="short_description" :value="__('Short Description')"/>
-                        <x-text-input id="short_description" name="short_description" type="text"
+                        <x-input-label for="keywords" :value="__('Keywords')"/>
+                        <x-text-input id="keywords" name="meta_description" type="text"
                                       class="mt-1 block w-full"
-                                      :value="old('short_description', $page->short_description)" required autofocus
+                                      :value="old('keywords', $page->keywords)" required autofocus
                                       autocomplete="name"/>
-                        <x-input-error class="mt-2" :messages="$errors->get('short_description')"/>
+                        <x-input-error class="mt-2" :messages="$errors->get('keywords')"/>
+                    </div>
+                    <div class="sm:p-8">
+                        <x-input-label for="meta_description" :value="__('Meta Description')"/>
+                        <x-text-input id="meta_description" name="meta_description" type="text"
+                                      class="mt-1 block w-full"
+                                      :value="old('meta_description', $page->meta_description)" required autofocus
+                                      autocomplete="name"/>
+                        <x-input-error class="mt-2" :messages="$errors->get('meta_description')"/>
                     </div>
                     <div class="sm:p-8">
                         <label for="description"
@@ -47,6 +50,13 @@
                         {{$page->description}}
                     </textarea>
                         <br>
+                        <label for="content"
+                               class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">{{__('Content')}}</label>
+                        <textarea id="content" name="content" rows="4"
+                                  class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-900 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                  placeholder="Write your Content">
+                        {{$page->content}}
+                    </textarea>
                         <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white" for="categories">Choose
                             a categories:</label>
                         <select
@@ -58,12 +68,21 @@
                             @endforeach
                         </select>
                         <br>
+                        {{--        file inputs          --}}
                         <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white" for="file">Upload
                             file</label>
                         <input name="file"
                                class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-900 dark:border-gray-600 dark:placeholder-gray-400"
                                id="file" type="file">
-
+                        <br>
+                        <div class="" id="img_alt_div">
+                            <x-input-label for="img_alt" :value="__('Image Alternative Text')"/>
+                            <x-text-input id="img_alt" name="img_alt" type="text" class="mt-1 block w-full"
+                                          :value="old('img_alt', $page->img_alt)" required autofocus
+                                          autocomplete="name"/>
+                            <x-input-error class="mt-2" :messages="$errors->get('img_alt')"/>
+                        </div>
+                        {{--      End  File Inputs        --}}
                     </div>
                     <x-primary-button>{{ __('Save') }}</x-primary-button>
                 </form>
@@ -78,10 +97,10 @@
 
                 <x-danger-button
                     x-data=""
-                    x-on:click.prevent="$dispatch('open-modal', 'confirm-user-deletion')"
+                    x-on:click.prevent="$dispatch('open-modal', 'confirm-page-deletion')"
                 >{{ __('Delete') }}</x-danger-button>
 
-                <x-modal name="confirm-user-deletion" :show="$errors->userDeletion->isNotEmpty()" focusable>
+                <x-modal name="confirm-page-deletion" :show="$errors->userDeletion->isNotEmpty()" focusable>
                     <form method="post" action="/delete" class="p-6">
                         @csrf
                         @method('delete')
@@ -120,4 +139,15 @@
             </div>
         </div>
     </div>
+    <script>
+        let fileInput = document.getElementById("file");
+        let img_alt_div = document.getElementById("img_alt_div");
+        img_alt_div.style.display = "none";
+        fileInput.addEventListener("change", function () {
+            // check if the file is selected or not
+            if (fileInput.files.length !== 0) {
+                img_alt_div.style.display = "block";
+            }
+        });
+    </script>
 </x-app-layout>
