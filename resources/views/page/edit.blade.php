@@ -7,7 +7,9 @@
             <div class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight lg:px-8">
 
                 @if ($errors->any())
-                    <div class="alert alert-danger">
+                    <div
+                        class="ml-4 p-4 mt-16 text-lg text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400"
+                        role="alert">
                         <ul>
                             @foreach ($errors->all() as $error)
                                 <li>{{ $error }}</li>
@@ -87,7 +89,7 @@
                         <br>
                         {{--        file inputs          --}}
                         <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white" for="file">Upload
-                            Image</label>
+                            Image, if exists image it will be replaced with a new one</label>
                         <input name="file"
                                accept="image/*"
                                class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-900 dark:border-gray-600 dark:placeholder-gray-400"
@@ -102,6 +104,12 @@
                         </div>
                         {{--      End  File Inputs        --}}
                     </div>
+                    @isset($page->img_src)
+                        <div><img class="h-auto max-w-xs"
+                                  src="{{Storage::exists($page->img_src) ? asset($page->img_src) : asset('storage/blank.jpg')}}"
+                                  alt="{{$page->img_alt}}" width="" height="">
+                        </div><br>
+                    @endisset
                     <x-primary-button>{{ __('Save') }}</x-primary-button>
                 </form>
 
