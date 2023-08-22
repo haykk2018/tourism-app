@@ -11,7 +11,10 @@
 <div>
     <div>{{$page->title}}</div>
     <div>{{$page->description}}</div>
-    <div><img src="{{$page->img_src ? asset($page->img_src) : asset('storage/blank.jpg')}}" alt="{{$page->img_alt}}" width="" height=""></div>
+    @isset($page->img_src)
+        <div><img src="{{Storage::exists($page->img_src) ? asset($page->img_src) : asset('storage/blank.jpg')}}"
+                  alt="{{$page->img_alt}}" width="" height=""></div>
+    @endisset
     <div>
         @isset($page->categories)
             @foreach($page->categories as $category)

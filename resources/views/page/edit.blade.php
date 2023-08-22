@@ -27,9 +27,9 @@
                     </div>
                     <div class="sm:p-8">
                         <x-input-label for="keywords" :value="__('Keywords')"/>
-                        <x-text-input id="keywords" name="meta_description" type="text"
+                        <x-text-input id="keywords" name="keywords" type="text"
                                       class="mt-1 block w-full"
-                                      :value="old('keywords', $page->keywords)" required autofocus
+                                      :value="old('keywords', $page->keywords)" autofocus
                                       autocomplete="name"/>
                         <x-input-error class="mt-2" :messages="$errors->get('keywords')"/>
                     </div>
@@ -37,9 +37,17 @@
                         <x-input-label for="meta_description" :value="__('Meta Description')"/>
                         <x-text-input id="meta_description" name="meta_description" type="text"
                                       class="mt-1 block w-full"
-                                      :value="old('meta_description', $page->meta_description)" required autofocus
+                                      :value="old('meta_description', $page->meta_description)" autofocus
                                       autocomplete="name"/>
                         <x-input-error class="mt-2" :messages="$errors->get('meta_description')"/>
+                    </div>
+                    <div class="sm:p-8">
+                        <x-input-label for="menu_name" :value="__('Menu Name')"/>
+                        <x-text-input id="menu_name" name="menu_name" type="text"
+                                      class="mt-1 block w-full"
+                                      :value="old('menu_name', $page->menu_name)" autofocus
+                                      autocomplete="name"/>
+                        <x-input-error class="mt-2" :messages="$errors->get('menu_name')"/>
                     </div>
                     <div class="sm:p-8">
                         <label for="description"
@@ -47,7 +55,7 @@
                         <textarea id="description" name="description" rows="4"
                                   class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-900 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                   placeholder="Write your description...">
-                        {{$page->description}}
+                        {{old('description', $page->description)}}
                     </textarea>
                         <br>
                         <label for="content"
@@ -55,7 +63,7 @@
                         <textarea id="content" name="content" rows="4"
                                   class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-900 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                   placeholder="Write your Content">
-                        {{$page->content}}
+                        {{old('content',$page->content)}}
                     </textarea>
                         <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white" for="categories">Choose
                             a categories:</label>
@@ -63,15 +71,25 @@
                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-900 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                             name="category[]" id="categories" multiple>
                             @foreach($categories as $category)
-                                <option value="{{$category->id}}" @if(false)selected @endif
-                                @if($page->categories->contains($category)) selected @endif> {{$category->name}}</option>
+                                @if(old('category')!=null)
+                                    <option value="{{ $category->id }}" @selected(is_array(old('category')) and
+                                    in_array($category->id, old('category')))>
+                                    {{ $category->name}}
+                                    </option>
+                                @else
+                                    <option value="{{ $category->id }}" @selected($page->
+                                        categories->contains($category))>
+                                        {{ $category->name}}
+                                    </option>
+                                @endif
                             @endforeach
                         </select>
                         <br>
                         {{--        file inputs          --}}
                         <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white" for="file">Upload
-                            file</label>
+                            Image</label>
                         <input name="file"
+                               accept="image/*"
                                class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-900 dark:border-gray-600 dark:placeholder-gray-400"
                                id="file" type="file">
                         <br>

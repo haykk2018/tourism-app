@@ -21,7 +21,7 @@ class PageController extends Controller
 
     public function dashboard()
     {
-        $all_pages = Page::all();
+        $all_pages = Page::paginate(15);
         return view('dashboard', ['pages' => $all_pages]);
     }
 
@@ -42,8 +42,8 @@ class PageController extends Controller
         $page = new Page();
         $page->fill($request->validated());
         if ($request->hasFile('file')) {
-            $img_src = $request->file('file')->store('page-photos');
-            $page->img_src = $img_src;
+            $stored_path= $request->file('file')->store('page-photos');
+            $page->img_src = $stored_path;
         }
         $page->save();
         if ($request->category) {
@@ -68,6 +68,7 @@ class PageController extends Controller
      */
     public function edit(int $id)
     {
+
         $page = Page::findOrFail($id);
         $categories = Category::all();
         return view('page.edit', ['page' => $page, 'categories' => $categories]);

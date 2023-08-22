@@ -14,7 +14,7 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        Page::factory(10)->create();
+        Page::factory(40)->create();
         $categories = Category::factory(4)->create();
 
         Page::All()->each(function ($page) use ($categories) {
@@ -25,12 +25,12 @@ class DatabaseSeeder extends Seeder
         //Page::factory(10)->create();
         // \App\Models\User::factory(10)->create();
 
-         \App\Models\User::factory()->create([
-             'name' => 'AdminUser',
-             'email' => 'admin@admin.com',
-             "password"=>bcrypt("abc123456"),
+        \App\Models\User::factory()->create([
+            'name' => 'AdminUser',
+            'email' => 'admin@admin.com',
+            "password" => bcrypt("abc123456"),
 //             'email_verified_at' => now(),
 //             'remember_token' => rand(10),//'remember_token' => Str::random(10),
-         ]);
+        ]);
     }
 }

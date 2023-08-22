@@ -22,14 +22,16 @@ class StorePageRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'title'=> ['string', 'max:255'],
-            'meta_description'=> ['string', 'max:255'],
-            'keywords'=> ['string', 'max:255'],
-            'description'=> ['string', 'max:255'],
-            'menu_name'=> ['string', 'max:255'],
-            'content'=> ['string'],
-            'img_src'=> ['string', 'max:255'],
-            'img_alt'=> ['string', 'max:255'],
+            'file' => 'mimes:img,png,jpg,jpeg,bmp|max:2048',
+            'title' => ['unique:pages', 'required', 'max:99'],
+            'meta_description' => ['max:255'],
+            'keywords' => ['max:255'],
+            'description' => ['max:255'],
+            'menu_name' => ['nullable', 'max:99', 'unique:pages'], //can be null,but if exist unique
+            'content' => [],
+            'category' => [],
+            'img_src' => ['string', 'max:255'],
+            'img_alt' => ['max:255'],
         ];
     }
 }

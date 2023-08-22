@@ -55,8 +55,8 @@
                         </tbody>
                     </table>
                 </div>
-
             </div>
+            {{ $pages->links() }}
         </div>
     </x-slot>
 

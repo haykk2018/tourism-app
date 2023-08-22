@@ -13,12 +13,12 @@ return new class extends Migration
     {
         Schema::create('pages', function (Blueprint $table) {
             $table->id();
-            $table->string('title')->unique();
+            $table->string('title');
             $table->string('keywords')->nullable();
             $table->string('meta_description')->nullable();
             $table->string('description')->nullable();
-            $table->string('menu_name')->unique();
-            $table->text('content');
+            $table->string('menu_name')->nullable()->unique();
+            $table->text('content')->nullable();
             $table->string('img_src')->nullable()->unique();
             $table->string('img_alt')->nullable();
             $table->timestamps();
