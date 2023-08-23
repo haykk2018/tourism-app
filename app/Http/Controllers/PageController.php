@@ -7,6 +7,7 @@ use App\Http\Requests\UpdatePageRequest;
 use App\Models\Category;
 use App\Models\Page;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\App;
 
 class PageController extends Controller
 {
@@ -15,6 +16,7 @@ class PageController extends Controller
      */
     public function index()
     {
+        if(isset($_GET['lang'])) App::setLocale($_GET['lang']);
         $all_pages = Page::all();
         return view('page.show_all', ['pages' => $all_pages]);
     }

@@ -9,6 +9,9 @@
 </head>
 <body>
 <div>
+    @auth
+        <a href="{{url("/dashboard")}}" style="float:right;">Dashboard</a>
+    @endauth
     <div>{{$page->title}}</div>
     <div>{{$page->description}}</div>
     @isset($page->img_src)
