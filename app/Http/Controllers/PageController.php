@@ -16,7 +16,7 @@ class PageController extends Controller
      */
     public function index()
     {
-        if(isset($_GET['lang'])) App::setLocale($_GET['lang']);
+        if (isset($_GET['lang'])) App::setLocale($_GET['lang']);
         $all_pages = Page::all();
         return view('page.show_all', ['pages' => $all_pages]);
     }
@@ -33,7 +33,7 @@ class PageController extends Controller
     public function create()
     {
         $categories = Category::all();
-        return view('page.new',  ['categories' => $categories]);
+        return view('page.new', ['categories' => $categories]);
     }
 
     /**
@@ -44,7 +44,7 @@ class PageController extends Controller
         $page = new Page();
         $page->fill($request->validated());
         if ($request->hasFile('file')) {
-            $stored_path= $request->file('file')->store('page-photos');
+            $stored_path = $request->file('file')->store('page-photos');
             $page->img_src = $stored_path;
         }
         $page->save();
@@ -102,5 +102,21 @@ class PageController extends Controller
     {
         Page::find($request->id)->delete();
         return redirect('/');
+    }
+
+    /**
+     * Search
+     */
+    public function search(Request $request)
+    {
+        $search = trim($request->input('search'));
+
+        $pages = $search != "" ?
+            Page::query()
+                ->where('title', 'LIKE', "%{$search}%")
+                ->orWhere('content', 'LIKE', "%{$search}%")
+                ->get() : null;
+
+        return view('page.search', compact('pages'));
     }
 }

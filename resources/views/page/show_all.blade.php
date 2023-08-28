@@ -23,6 +23,7 @@
         </select>
     </div>
 </div>
+<a href="{{url('/search')}}">{{ __('Search') }}</a>
 @foreach ($pages as $page)
     <div>
         <div>{{$page->title}}</div>

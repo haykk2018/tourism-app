@@ -40,16 +40,17 @@ Route::controller(PageController::class)->group(function () {
     Route::get('/view/{id}', 'show');
     Route::get('/create', 'create')->middleware('auth');
     Route::post('/', 'store');
-    Route::put('/','update');
-    Route::delete('/delete','destroy')->middleware('auth');
+    Route::put('/', 'update');
+    Route::delete('/delete', 'destroy')->middleware('auth');
+    Route::get('/search', 'search');
 });
 Route::controller(CategoryController::class)->group(function () {
     Route::get('categories/', 'index');
     Route::get('category/edit/{id}', 'edit')->middleware('auth');
     Route::get('category/create', 'create')->middleware('auth');
     Route::post('category/', 'store');
-    Route::put('category/','update');
-    Route::delete('category/delete','destroy')->middleware('auth');
+    Route::put('category/', 'update');
+    Route::delete('category/delete', 'destroy')->middleware('auth');
 });
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';
